@@ -168,6 +168,54 @@ def ejercicio_9():
     else:
         print("Extremo (puede causar graves daños a gran escala)")
 
+# Ejercicio 10: Utilizando la información sobre las estaciones del año, escribir un programa que pregunte al usuario en cuál hemisferio se encuentra (N/S), qué mes del año es y qué día es. 
+# El programa deberá utilizar esa información para imprimir por pantalla si el usuario se encuentra en otoño, invierno, primavera o verano.
+def ejercicio_10():
+    print("EJERCICIO 10")
+    
+    hemisferio = input("Ingrese el hemisferio (N para Norte, S para Sur): ").upper()
+    hemisferio_valido = hemisferio == "N" or hemisferio == "S"
+
+    if not hemisferio_valido:
+        print("Error: El hemisferio ingresado no es válido")
+        return
+
+    mes = int(input("Ingrese el mes (1-12): "))
+    mes_valido = mes >= 1 and mes <= 12
+
+    if not mes_valido:
+        print("Error: El mes ingresado no es válido")
+        return
+
+    dia = int(input("Ingrese el día (1-31): "))
+    dia_valido = dia >= 1 and dia <= 31
+
+    if not dia_valido:
+        print("Error: El día ingresado no es válido")
+        return
+    
+    
+    if hemisferio == "N":  
+        if (mes == 12 and dia >= 21) or (mes == 1) or (mes == 2) or (mes == 3 and dia <= 20):
+            estacion = "Invierno"
+        elif (mes == 3 and dia >= 21) or (mes == 4) or (mes == 5) or (mes == 6 and dia <= 20):
+            estacion = "Primavera"
+        elif (mes == 6 and dia >= 21) or (mes == 7) or (mes == 8) or (mes == 9 and dia <= 20):
+            estacion = "Verano"
+        else:  # (mes == 9 and dia >= 21) or (mes == 10) or (mes == 11) or (mes == 12 and dia <= 20)
+            estacion = "Otoño"
+    elif hemisferio == "S":  
+        if (mes == 12 and dia >= 21) or (mes == 1) or (mes == 2) or (mes == 3 and dia <= 20):
+            estacion = "Verano"
+        elif (mes == 3 and dia >= 21) or (mes == 4) or (mes == 5) or (mes == 6 and dia <= 20):
+            estacion = "Otoño"
+        elif (mes == 6 and dia >= 21) or (mes == 7) or (mes == 8) or (mes == 9 and dia <= 20):
+            estacion = "Invierno"
+        else:  # (mes == 9 and dia >= 21) or (mes == 10) or (mes == 11) or (mes == 12 and dia <= 20)
+            estacion = "Primavera"
+    
+    print("Estás en la estación de", estacion)
+
 #Ejecutar el ejercicios
 ejercicio_1()
 ejercicio_2()
@@ -178,3 +226,4 @@ ejercicio_6()
 ejercicio_7()
 ejercicio_8()
 ejercicio_9()
+ejercicio_10()
