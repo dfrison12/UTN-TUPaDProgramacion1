@@ -113,7 +113,34 @@ def ejercicio_7():
     else:
         print(frase)
 
-# Ejecutar el ejercicios
+# Ejercicio 8: Escribir un programa que solicite al usuario que ingrese su nombre y el número 1, 2 o 3 dependiendo de la opción que desee:
+# 1. Si quiere su nombre en mayúsculas. Por ejemplo: PEDRO.
+# 2. Si quiere su nombre en minúsculas. Por ejemplo: pedro.
+# 3. Si quiere su nombre con la primera letra mayúscula. Por ejemplo: Pedro.
+def ejercicio_8():
+    print("EJERCICIO 8")
+    
+    nombre = input("Por favor, ingresa tu nombre: ")
+    print("¿Cómo quieres que se muestre tu nombre?")
+    print("1. En mayúsculas")
+    print("2. En minúsculas")
+    print("3. Con la primera letra mayúscula")
+    
+    opcion = int(input("Ingresa el número de la opción (1, 2 o 3): "))
+    
+    if opcion == 1:
+        mayusculas = nombre.upper()
+        print(mayusculas)
+    elif opcion == 2:
+        minusculas = nombre.lower()
+        print(minusculas)
+    elif opcion == 3:
+        primera_letra_mayuscula = nombre.title()
+        print(primera_letra_mayuscula)
+    else:
+        print("Opción no válida. Por favor, ingresa 1, 2 o 3.")
+
+#Ejecutar el ejercicios
 ejercicio_1()
 ejercicio_2()
 ejercicio_3()
@@ -121,3 +148,4 @@ ejercicio_4()
 ejercicio_5()
 ejercicio_6()
 ejercicio_7()
+ejercicio_8()
