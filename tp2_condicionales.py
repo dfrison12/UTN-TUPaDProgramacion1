@@ -57,8 +57,23 @@ def ejercicio_4():
     else:
         print("Adulto/a")
 
+# Ejercicio 5: Escribir un programa que permita introducir contraseñas de entre 8 y 14 caracteres
+# Si el usuario ingresa una contraseña de longitud adecuada, imprimir por en pantalla el mensaje "Ha ingresado una contraseña correcta";
+# en caso contrario, imprimir por pantalla "Por favor, ingrese una contraseña de entre 8 y 14 caracteres".
+def ejercicio_5():
+    print("EJERCICIO 5")
+    
+    contraseña = input("Por favor, ingresa una contraseña: ")
+    longitud = len(contraseña)
+    
+    if longitud >= 8 and longitud <= 14:
+        print("Ha ingresado una contraseña correcta")
+    else:
+        print("Por favor, ingrese una contraseña de entre 8 y 14 caracteres")
+
 # Ejecutar el ejercicios
 ejercicio_1()
 ejercicio_2()
 ejercicio_3()
 ejercicio_4()
+ejercicio_5()
