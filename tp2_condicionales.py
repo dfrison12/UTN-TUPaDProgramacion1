@@ -99,6 +99,20 @@ def ejercicio_6():
     else:
         print("Sin sesgo")
 
+# Ejercicio 7: Escribir un programa que solicite una frase o palabra al usuario. 
+# Si termina con vocal, añadir un signo de exclamación al final e imprimir el string por pantalla;
+# en caso contrario, dejar el string tal cual lo ingresó el usuario e imprimirlo por pantalla.
+def ejercicio_7():
+    print("EJERCICIO 7")
+    
+    frase = input("Por favor, ingresa una frase o palabra: ")
+    ultima_letra = frase[-1].lower()
+    
+    if ultima_letra == 'a' or ultima_letra == 'e' or ultima_letra == 'i' or ultima_letra == 'o' or ultima_letra == 'u':
+        print(frase,"!")
+    else:
+        print(frase)
+
 # Ejecutar el ejercicios
 ejercicio_1()
 ejercicio_2()
@@ -106,3 +120,4 @@ ejercicio_3()
 ejercicio_4()
 ejercicio_5()
 ejercicio_6()
+ejercicio_7()
