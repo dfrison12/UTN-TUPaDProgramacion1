@@ -1,6 +1,9 @@
 # TP 2 - Condicionales - Tecnicatura Universitaria en Programación
 # Alumno: Dario Frison
 
+import random
+from statistics import mode, median, mean
+
 # Ejercicio 1: Escribir un programa que solicite la edad del usuario. Si el usuario es mayor de 18 años,
 # deberá mostrar un mensaje en pantalla que diga "Es mayor de edad"
 def ejercicio_1():
@@ -71,9 +74,35 @@ def ejercicio_5():
     else:
         print("Por favor, ingrese una contraseña de entre 8 y 14 caracteres")
 
+# Ejercicio 6: Usar la moda (mode), la mediana (median) y la media (mean) para predecir la forma de una distribución normal a partir del siguiente criterio:
+# Sesgo positivo o a la derecha: cuando la media es mayor que la mediana y, a su vez, la mediana es mayor que la moda.
+# Sesgo negativo o a la izquierda: cuando la media es menor que la mediana y, a su vez, la mediana es menor que la moda.
+# Sin sesgo: cuando la media, la mediana y la moda son iguales.
+def ejercicio_6():
+    print("EJERCICIO 6")
+    
+    numeros_aleatorios = [random.randint(1, 100) for i in range(50)]
+    
+    moda_valor = mode(numeros_aleatorios)
+    mediana_valor = median(numeros_aleatorios)
+    media_valor = mean(numeros_aleatorios)
+    
+    print("Lista de números: ", numeros_aleatorios)
+    print("Moda: ", moda_valor)
+    print("Mediana: ", mediana_valor)
+    print("Media: ", media_valor)
+    
+    if media_valor > mediana_valor and mediana_valor > moda_valor:
+        print("Sesgo positivo o a la derecha")
+    elif media_valor < mediana_valor and mediana_valor < moda_valor:
+        print("Sesgo negativo o a la izquierda")
+    else:
+        print("Sin sesgo")
+
 # Ejecutar el ejercicios
 ejercicio_1()
 ejercicio_2()
 ejercicio_3()
 ejercicio_4()
 ejercicio_5()
+ejercicio_6()
