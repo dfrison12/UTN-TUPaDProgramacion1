@@ -192,6 +192,158 @@ def ejercicio_6():
     for i in range(cantidad):
         print(f"posicion {i}: {numeros[i]}")
 
+# Ejercicio 7: Crear una matriz (lista anidada) de 7x2 con las temperaturas mínimas y máximas de una semana.
+# • Calcular el promedio de las mínimas y el de las máximas.
+# • Mostrar en qué día se registró la mayor amplitud térmica.
+
+def ejercicio_7():
+    print("Ejercicio 7")
+
+    matriz = [[25, 32], [24, 31], [23, 27], [26, 29], [20, 28], [24, 27], [23, 30]]
+
+    suma_minima = 0
+    suma_maxima = 0
+    mayor_amplitud = 0
+    dia_mayor_amplitud = 0
+
+
+    for i in range(len(matriz)):
+
+        temp_minima = matriz[i][0]
+        temp_maxima = matriz[i][1]
+
+        print(f"Dia {i + 1}: Mínima: {temp_minima}, Máxima: {temp_maxima}")
+
+        suma_minima += temp_minima
+        suma_maxima += temp_maxima
+
+        if temp_maxima - temp_minima > mayor_amplitud:
+            mayor_amplitud = temp_maxima - temp_minima
+            dia_mayor_amplitud = i + 1
+    
+
+    print(f"Promedio de las mínimas: {suma_minima / len(matriz)}")
+    print(f"Promedio de las máximas: {suma_maxima / len(matriz)}")
+    print(f"Dia con mayor amplitud térmica: {dia_mayor_amplitud}")
+    print(f"Mayor amplitud térmica: {mayor_amplitud}")
+
+# Ejercicio 8: Crear una matriz con las notas de 5 estudiantes en 3 materias.
+# • Mostrar el promedio de cada estudiante.
+# • Mostrar el promedio de cada materia.
+
+def ejercicio_8():
+    print("Ejercicio 8")
+    
+    matriz_notas = [[9, 9, 9], [6, 6, 6], [9, 7, 8], [7, 8, 9], [8, 7, 9]]
+    cantidad_estudiantes = len(matriz_notas)
+    cantidad_materias = len(matriz_notas[0])
+
+    for i in range(cantidad_estudiantes):
+        suma_notas_estudiante = 0
+
+        for j in range(cantidad_materias):
+            suma_notas_estudiante += matriz_notas[i][j]
+        
+        promedio_estudiante = suma_notas_estudiante / cantidad_materias
+        print(f"Promedio del estudiante {i + 1}: {promedio_estudiante}")
+    
+    for j in range(cantidad_materias):
+        suma_notas_materia = 0
+        for i in range(cantidad_estudiantes):
+            suma_notas_materia += matriz_notas[i][j]
+
+        promedio_materia = suma_notas_materia / cantidad_estudiantes
+        print(f"Promedio de la materia {j + 1}: {promedio_materia}")
+    
+# Ejercicio 9: Representar un tablero de Ta-Te-Ti como una lista de listas (3x3).
+# • Inicializarlo con guiones "-" representando casillas vacías.
+# • Permitir que dos jugadores ingresen posiciones (fila, columna) para colocar "X" o "O".
+# • Mostrar el tablero después de cada jugada.
+def ejercicio_9():
+    print("Ejercicio 9")
+    
+    tablero = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]
+    
+    def mostrar_tablero():
+        print("\nTablero actual:")
+        for i in range(3):
+            for j in range(3):
+                print(tablero[i][j], end=" ")
+            print() 
+        print()
+    
+    mostrar_tablero()
+    
+    turnos_jugados = 0
+    
+    while turnos_jugados < 9:
+        if turnos_jugados % 2 == 0:
+            ficha_jugador = "X"
+            print("Turno del jugador X (Ingrese 0 para salir)")
+        else:
+            ficha_jugador = "O"
+            print("Turno del jugador O (Ingrese 0 para salir)")
+        
+        fila = int(input("Ingrese la fila (1, 2 o 3): "))
+        if fila < 1 or fila > 3:
+            if fila == 0:
+                break
+            print("- La fila debe ser 1, 2 o 3")
+            continue
+
+        columna = int(input("Ingrese la columna (1, 2 o 3): "))
+        if columna < 1 or columna > 3:
+            if columna == 0:
+                break
+            print("-La columna debe ser 1, 2 o 3")
+            continue
+        
+        if tablero[fila - 1][columna - 1] != "-":
+            print("- Esa casilla ya está ocupada")
+        else:
+            tablero[fila - 1][columna - 1] = ficha_jugador
+            turnos_jugados += 1
+        
+        mostrar_tablero()
+    
+    print("¡Juego terminado!")
+
+# Ejercicio 10: Una tienda registra las ventas de 4 productos durante 7 días, en una matriz de 4x7.
+# • Mostrar el total vendido por cada producto.
+# • Mostrar el día con mayores ventas totales.
+# • Indicar cuál fue el producto más vendido en la semana
+def ejercicio_10():
+    print("Ejercicio 10")
+    
+    matriz_ventas = [[2000, 340, 100, 250, 150, 300, 660], [150, 200, 1200, 280, 180, 250, 190], [220, 300, 150, 280, 190, 260, 210], [18980, 250, 130, 270, 170, 240, 200]]
+    cantidad_productos = len(matriz_ventas)
+    cantidad_dias = len(matriz_ventas[0])
+    totales_productos = []
+    
+    for i in range(cantidad_productos):
+        total_ventas_producto = 0
+        mayor_venta_producto = 0
+        posicion_mayor_venta_producto = -1
+
+
+        for j in range(cantidad_dias):
+            producto_actual = matriz_ventas[i][j]
+            total_ventas_producto += producto_actual
+
+            if producto_actual > mayor_venta_producto:
+                mayor_venta_producto = producto_actual
+                posicion_mayor_venta_producto = j + 1
+
+
+        totales_productos.append(total_ventas_producto)
+
+        print(f"Total vendido del producto {i + 1}: {total_ventas_producto}")
+        print(f"Dia con mayor venta del producto {i + 1}: Dia {posicion_mayor_venta_producto} con {mayor_venta_producto} ventas")
+
+    producto_mas_vendido = totales_productos.index(max(totales_productos)) + 1
+    print(f"Producto mas vendido: {producto_mas_vendido}")
+
+
 # Ejecutar Ejericios
 ejercicio_1()
 ejercicio_2()
@@ -199,3 +351,7 @@ ejercicio_3()
 ejercicio_4()
 ejercicio_5()
 ejercicio_6()
+ejercicio_7()
+ejercicio_8()
+ejercicio_9()
+ejercicio_10()
