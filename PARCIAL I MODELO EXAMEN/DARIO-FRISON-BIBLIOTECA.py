@@ -1,5 +1,5 @@
 opciones_menu = [
-    "1. Ingresar titulo (sin ejemplares)"
+    "1. Ingresar titulo (sin ejemplares)",
     "2. Ingresar ejemplares disponibles (sin titulo)",
     "3. Motrar catalogo de libros",
     "4. Consultar disponibilidad de un titulo especifico",
@@ -13,6 +13,8 @@ titulos = []
 ejemplares = []
 
 while True:
+    print("--------------------------------")
+    print("--------------------------------")
     print(" -- Menu Biblioteca --")
     for opcion in opciones_menu:
         print(opcion)
@@ -158,14 +160,13 @@ while True:
         contador = 1
         print("-- Catalogo completo: --")
 
-        for i, titulo in titulos:
+        for titulo in titulos:
             posicion = titulos.index(titulo)
-            print(f"{i + 1}. {titulo} - {ejemplares[posicion]} ejemplares disponibles")
+            print(f"{contador}. {titulo} - {ejemplares[posicion]} ejemplares disponibles")
             contador += 1
 
-        print(f"Total de titulos: {contador}")
-
     elif seleccion == "9":
+
         print("Hasta luego!")
     else:
         print("Opcion no valida")
