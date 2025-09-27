@@ -36,7 +36,6 @@ while not salir:
             print(f"- Titulo ingresado: {titulo}")
             titulos.append(titulo)
             posicion = titulo.index(titulo)
-            # Aca no se uso append porque no se sabe la posicion del titulo en la lista
             ejemplares.insert(posicion, 0)
 
         case "2":
@@ -51,15 +50,22 @@ while not salir:
                 print(f"{i + 1}. {titulo}")
 
             print()
-            posicion = int(input("- Seleccione el numero de titulo para ingresar cantidad de ejemplares:  ")) - 1
+            # Validar posición
+            while True:
+                entrada_posicion = input("- Seleccione el numero de titulo para ingresar cantidad de ejemplares: ")
+                if not (entrada_posicion.isdigit() and int(entrada_posicion) - 1 >= 0 and int(entrada_posicion) - 1 < len(titulos)):
+                    print("** Error: Posicion invalida, intente nuevamente **")
+                else:
+                    break
 
-            # Validar que la posicion sea valida
+            # Validar cantidad
+            while True:
+                entrada_cantidad = input("- Ingrese la cantidad de ejemplares: ")
+                if not (entrada_cantidad.isdigit() and int(entrada_cantidad) >= 0):
+                    print("** Error: La cantidad debe ser un numero positivo o cero **")
+                else:
+                    break
 
-            while posicion < 0 or posicion >= len(titulos):
-                print("Posicion invalida, intente nuevamente")
-                posicion = int(input("- Seleccione el numero de titulo para ingresar cantidad de ejemplares: ")) - 1
-
-            cantidad = int(input("- Ingrese la cantidad de ejemplares: "))
             ejemplares[posicion] += cantidad
             print(f"Ejemplares disponibles actualmente para {titulos[posicion]}: {ejemplares[posicion]}")
 
@@ -126,10 +132,20 @@ while not salir:
             if nuevo_titulo in titulos:
                 print(f"El titulo {nuevo_titulo} ya existe")
             else:
-                cantidad = int(input(f"- Ingresar cantidad de ejemplares para {nuevo_titulo}: "))
+                # Validar cantidad
+                while True:
+                    entrada_cantidad = input(f"- Ingresar cantidad de ejemplares para {nuevo_titulo}: ")
+                    if not (entrada_cantidad.isdigit() and int(entrada_cantidad) >= 0):
+                        print("** Error: La cantidad debe ser un numero positivo o cero **")
+                    else:
+                        cantidad = int(entrada_cantidad)
+                        break
+                    
+
+                # Agregar titulo y cantidad de ejemplares al final de la lista
                 titulos.append(nuevo_titulo)
-                posicion = titulos.index(nuevo_titulo)
-                ejemplares.insert(posicion, cantidad)
+                ejemplares.append(cantidad)
+
                 print(f"Titulo {nuevo_titulo} agregado con {cantidad} ejemplares")
             
         case "7":
@@ -140,11 +156,14 @@ while not salir:
             for i, titulo in enumerate(titulos):
                 print(f"{i + 1}. {titulo}")
 
-            posicion = int(input("- Ingresar numero de titulo a actualizar: ")) - 1
+            while True:
+                entrada_posicion = input("- Ingresar numero de titulo a actualizar: ")
 
-            while posicion < 0 or posicion >= len(titulos):
-                print("Posicion invalida, intente nuevamente")
-                posicion = int(input("- Seleccione el numero de titulo para ingresar cantidad de ejemplares: ")) - 1
+                if not (entrada_posicion.isdigit() and int(entrada_posicion) - 1 >= 0 and int(entrada_posicion) - 1 < len(titulos)):
+                    print("** Error: Posicion invalida, intente nuevamente **")
+                else:
+                    posicion = int(entrada_posicion) - 1
+                    break
 
             accion = input("- Ingrese 'p' para prestamo o 'd' para devolucion: " ).lower()
 
