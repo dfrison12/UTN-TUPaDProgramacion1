@@ -109,7 +109,17 @@ while True:
                     print(titulo)
 
     elif seleccion == "6":
-        pass
+
+        nuevo_titulo = input("Ingresar titulo a agregar: ")
+
+        if nuevo_titulo in titulos:
+            print(f"El titulo {nuevo_titulo} ya existe")
+        else:
+            cantidad = int(input(f"Ingresar cantidad de ejemplares para {nuevo_titulo}: "))
+            posicion = titulos.index(nuevo_titulo)
+            ejemplares.insert(posicion, cantidad)
+            print(f"Titulo {nuevo_titulo} agregado con {cantidad} ejemplares")
+        
     elif seleccion == "7":
         pass
     elif seleccion == "8":
