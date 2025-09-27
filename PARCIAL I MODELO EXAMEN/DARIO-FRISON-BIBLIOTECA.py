@@ -89,7 +89,25 @@ while True:
                     break
 
     elif seleccion == "5":
-        pass
+        
+        if not titulos:
+            print("No hay titulos ingresados. Primero deben existir titulos para poder ingresar cantidad de ejemplares")
+            continue
+        
+        agotados = False
+
+        for i in ejemplares:
+            if i == 0:
+                agotados = True
+                break
+        
+        if agotados:
+            print("Libros agotados:")
+            for titulo in titulos:
+                posicion = titulos.index(titulo)
+                if ejemplares[posicion] == 0:
+                    print(titulo)
+
     elif seleccion == "6":
         pass
     elif seleccion == "7":
