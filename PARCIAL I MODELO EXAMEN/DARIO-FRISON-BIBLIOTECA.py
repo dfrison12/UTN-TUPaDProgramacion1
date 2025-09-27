@@ -35,9 +35,7 @@ while not salir:
                 print("** ** ** ")
             print(f"- Titulo ingresado: {titulo}")
             titulos.append(titulo)
-            posicion = titulo.index(titulo)
-            ejemplares.insert(posicion, 0)
-
+            ejemplares.append(0)
         case "2":
             if not titulos:
                 print("No hay titulos ingresados. Primero deben existir titulos para poder ingresar cantidad de ejemplares")
@@ -56,6 +54,7 @@ while not salir:
                 if not (entrada_posicion.isdigit() and int(entrada_posicion) - 1 >= 0 and int(entrada_posicion) - 1 < len(titulos)):
                     print("** Error: Posicion invalida, intente nuevamente **")
                 else:
+                    posicion = int(entrada_posicion) - 1
                     break
 
             # Validar cantidad
@@ -64,9 +63,9 @@ while not salir:
                 if not (entrada_cantidad.isdigit() and int(entrada_cantidad) >= 0):
                     print("** Error: La cantidad debe ser un numero positivo o cero **")
                 else:
+                    ejemplares[posicion] += int(entrada_cantidad)
                     break
 
-            ejemplares[posicion] += cantidad
             print(f"Ejemplares disponibles actualmente para {titulos[posicion]}: {ejemplares[posicion]}")
 
         case "3":
@@ -154,7 +153,7 @@ while not salir:
                 continue
 
             for i, titulo in enumerate(titulos):
-                print(f"{i + 1}. {titulo}")
+                print(f"{i + 1}. {titulo}: {ejemplares[i]} ejemplares disponibles")
 
             while True:
                 entrada_posicion = input("- Ingresar numero de titulo a actualizar: ")
