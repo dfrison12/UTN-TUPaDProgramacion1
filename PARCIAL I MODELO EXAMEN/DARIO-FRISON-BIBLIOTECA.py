@@ -147,12 +147,26 @@ while True:
                 ejemplares[posicion] += 1
                 print(f"Devolucion realizada para {titulos[posicion]} Ejemplares disponibles: {ejemplares[posicion]}")
         else:
-            print("Opcion no valida")
+            print("Opcion no valida. Use 'p' para prestamo o 'd' para devolucion")
 
     elif seleccion == "8":
-        pass
+
+        if not titulos:
+            print("No hay titulos ingresados. Primero deben existir titulos para poder ingresar cantidad de ejemplares")
+            continue
+
+        contador = 1
+        print("-- Catalogo completo: --")
+
+        for i, titulo in titulos:
+            posicion = titulos.index(titulo)
+            print(f"{i + 1}. {titulo} - {ejemplares[posicion]} ejemplares disponibles")
+            contador += 1
+
+        print(f"Total de titulos: {contador}")
+
     elif seleccion == "9":
-        break
+        print("Hasta luego!")
     else:
         print("Opcion no valida")
         
