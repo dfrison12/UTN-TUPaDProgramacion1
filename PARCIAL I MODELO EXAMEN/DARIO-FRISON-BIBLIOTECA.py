@@ -67,7 +67,28 @@ while True:
             print(f"{i + 1}. {titulo}")
 
     elif seleccion == "4":
-        pass
+
+        if not titulos:
+            print("No hay titulos ingresados. Primero deben existir titulos para poder ingresar cantidad de ejemplares")
+            continue
+        
+        titulo_consulta = input("Ingresar titulo a consultar: ")
+
+        while True:
+            if titulo_consulta in titulos:
+                posicion = titulos.index(titulo_consulta)
+                print(f"Cantidad de ejemplares disponibles para {titulo_consulta}: {ejemplares[posicion]}")
+                break
+            else:
+                print(f"El titulo {titulo_consulta} no se encuentra en el catalogo")
+                print("Desea ingresarlo nuevamente? (S: Vuelve a ingresar / N: Vuelve al menu)")
+
+                if input().lower() == "s":
+                    titulo_consulta = input("Ingresar titulo a consultar: ")
+                else:
+                    break
+
+
     elif seleccion == "5":
         pass
     elif seleccion == "6":
