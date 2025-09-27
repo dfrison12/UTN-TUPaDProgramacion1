@@ -121,7 +121,34 @@ while True:
             print(f"Titulo {nuevo_titulo} agregado con {cantidad} ejemplares")
         
     elif seleccion == "7":
-        pass
+
+        if not titulos:
+            print("No hay titulos ingresados. Primero deben existir titulos para poder ingresar cantidad de ejemplares")
+            continue
+
+        for i, titulo in enumerate(titulos):
+            print(f"{i + 1}. {titulo}")
+
+        posicion = int(input("Ingresar numero de titulo a actualizar: ")) - 1
+
+        while posicion < 0 or posicion >= len(titulos):
+            print("Posicion invalida, intente nuevamente")
+            posicion = int(input("Seleccione el numero de titulo para ingresar cantidad de ejemplares: ")) - 1
+
+        accion = input("Ingrese 'p' para prestamo o 'd' para devolucion:" ).lower()
+
+        if accion == "p":
+            if ejemplares[posicion] > 0:
+                ejemplares[posicion] -= 1
+                print(f"Prestamo realizado para {titulos[posicion]} Ejemplares disponibles: {ejemplares[posicion]}")
+            else:
+                print(f"No hay ejemplares disponibles para {titulos[posicion]}")
+        elif accion == "d":
+                ejemplares[posicion] += 1
+                print(f"Devolucion realizada para {titulos[posicion]} Ejemplares disponibles: {ejemplares[posicion]}")
+        else:
+            print("Opcion no valida")
+
     elif seleccion == "8":
         pass
     elif seleccion == "9":
