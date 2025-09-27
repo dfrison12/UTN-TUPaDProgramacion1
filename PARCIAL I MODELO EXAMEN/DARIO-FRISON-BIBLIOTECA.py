@@ -59,7 +59,13 @@ while True:
         print(f"Ejemplares disponibles actualmente para {titulos[posicion]}: {ejemplares[posicion]}")
 
     elif seleccion == "3":
-        pass
+        if not titulos:
+            print("No hay titulos ingresados. Primero deben existir titulos para poder ingresar cantidad de ejemplares")
+            continue
+        print("-- Catalogo de libros: --")
+        for i, titulo in enumerate(titulos):
+            print(f"{i + 1}. {titulo}")
+
     elif seleccion == "4":
         pass
     elif seleccion == "5":
