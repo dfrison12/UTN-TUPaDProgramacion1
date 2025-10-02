@@ -128,6 +128,67 @@ def solicitar_dos_numeros_usuario():
             print(f"División: {resultados[3]:.2f}")
         break
 
+# 8. Crear una función llamada calcular_imc(peso, altura) que reciba el peso en kilogramos y la altura en metros, y devuelva el índice de masa corporal (IMC). Solicitar al usuario los datos y llamar a la función para mostrar el resultado con dos decimales.
+
+def calcular_imc(peso, altura):
+    if altura <= 0:
+        return None  # Evitar división por cero o altura inválida
+    imc = peso / (altura ** 2)
+    return imc
+
+def solicitar_datos_imc_usuario():
+    while True:
+        entrada_peso = input("Ingrese su peso en kilogramos: ")
+        entrada_altura = input("Ingrese su altura en metros: ")
+        try:
+            peso = float(entrada_peso)
+            altura = float(entrada_altura)
+            if peso <= 0 or altura <= 0:
+                print("Por favor, ingrese valores positivos para peso y altura.")
+                continue
+            imc = calcular_imc(peso, altura)
+            if imc is None:
+                print("Error al calcular el IMC. Verifique los datos ingresados.")
+            else:
+                print(f"Su índice de masa corporal (IMC) es: {imc:.2f}")
+            break
+        except ValueError:
+            print("Por favor, ingrese números válidos para peso y altura.")
+
+# 9. Crear una función llamada celsius_a_fahrenheit(celsius) que reciba una temperatura en grados Celsius y devuelva su equivalente en Fahrenheit. Pedir al usuario la temperatura en Celsius y mostrar el resultado usando la función.
+def celsius_a_fahrenheit(celsius):
+    return (celsius * 9/5) + 32
+
+def solicitar_celsius_usuario():
+    while True:
+        entrada = input("Ingrese la temperatura en grados Celsius: ")
+        try:
+            celsius = float(entrada)
+            fahrenheit = celsius_a_fahrenheit(celsius)
+            print(f"{celsius}°C son equivalentes a {fahrenheit:.2f}°F.")
+            break
+        except ValueError:
+            print("Por favor, ingrese un número válido para la temperatura.")
+
+# 10.Crear una función llamada calcular_promedio(a, b, c) que reciba tres números como parámetros y devuelva el promedio de ellos. Solicitar los números al usuario y mostrar el resultado usando esta función.
+def calcular_promedio(a, b, c):
+    return (a + b + c) / 3
+
+def solicitar_tres_numeros_usuario():
+    while True:
+        entrada_a = input("Ingrese el primer número: ")
+        entrada_b = input("Ingrese el segundo número: ")
+        entrada_c = input("Ingrese el tercer número: ")
+        try:
+            a = float(entrada_a)
+            b = float(entrada_b)
+            c = float(entrada_c)
+            promedio = calcular_promedio(a, b, c)
+            print(f"El promedio de {a}, {b} y {c} es: {promedio:.2f}")
+            break
+        except ValueError:
+            print("Por favor, ingrese números válidos.")
+
 # Programa principal
 def main():
     # Ejercicio 1
@@ -139,13 +200,18 @@ def main():
     solicitar_datos_usuario()
     #Ejercicio 4
     solicitar_radio_usuario()
-    #Ejercicio 5
+    # Ejercicio 5
     solicitar_segundos_usuario()
-    #Ejercicio 6
+    # Ejercicio 6
     solicitar_numero_usuario()
-    #Ejercicio 7
+    # Ejercicio 7
     solicitar_dos_numeros_usuario()
-
+    # Ejercicio 8
+    solicitar_datos_imc_usuario()
+    # Ejercicio 9
+    solicitar_celsius_usuario()
+    # Ejercicio 10
+    solicitar_tres_numeros_usuario()
 
 
 main()
