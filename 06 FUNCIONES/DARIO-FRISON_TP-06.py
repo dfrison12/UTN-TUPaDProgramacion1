@@ -100,6 +100,34 @@ def solicitar_numero_usuario():
         tabla_multiplicar(numero)
         break
 
+# 7. Crear una función llamada operaciones_basicas(a, b) que reciba dos números como parámetros y devuelva una tupla con el resultado de sumarlos, restarlos, multiplicarlos y dividirlos. Mostrar los resultados de forma clara
+
+def operaciones_basicas(a, b):
+    suma = a + b
+    resta = a - b
+    multiplicacion = a * b
+    division = a / b if b != 0 else None  # Evitar división por cero
+    return (suma, resta, multiplicacion, division)
+
+def solicitar_dos_numeros_usuario():
+    while True:
+        entrada_a = input("Ingrese el primer número: ")
+        entrada_b = input("Ingrese el segundo número: ")
+        if not (entrada_a.lstrip('-').isdigit() and entrada_b.lstrip('-').isdigit()):
+            print("Por favor, ingrese números enteros válidos.")
+            continue
+        a = int(entrada_a)
+        b = int(entrada_b)
+        resultados = operaciones_basicas(a, b)
+        print(f"Suma: {resultados[0]}")
+        print(f"Resta: {resultados[1]}")
+        print(f"Multiplicación: {resultados[2]}")
+        if resultados[3] is None:
+            print("División: No se puede dividir por cero.")
+        else:
+            print(f"División: {resultados[3]:.2f}")
+        break
+
 # Programa principal
 def main():
     # Ejercicio 1
@@ -115,6 +143,8 @@ def main():
     solicitar_segundos_usuario()
     #Ejercicio 6
     solicitar_numero_usuario()
+    #Ejercicio 7
+    solicitar_dos_numeros_usuario()
 
 
 
