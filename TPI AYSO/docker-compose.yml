@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  servidor:
+    build: ./servidor
+    container_name: servidor_ayso
+    networks:
+      - tpi-ayso-red
+    ports:
+      - "5000:5000"
+  cliente:
+    build: ./cliente
+    container_name: cliente_ayso
+    networks:
+      - tpi-ayso-red
+    depends_on:
+      - servidor
+  networks:
+    tpi-ayso-red:
+      driver: bridge
