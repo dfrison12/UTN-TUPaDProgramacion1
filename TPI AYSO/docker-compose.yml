@@ -6,11 +6,15 @@ services:
       - tpi-ayso-red
     ports:
       - "5000:5000"
+    volumes:
+      - ./servidor:/usr/src/app
   cliente:
     build: ./cliente
     container_name: cliente_ayso
     networks:
       - tpi-ayso-red
+    volumes:
+      - ./cliente:/usr/src/app
     depends_on:
       - servidor
 networks:
