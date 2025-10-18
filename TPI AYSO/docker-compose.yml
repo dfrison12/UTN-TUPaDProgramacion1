@@ -13,6 +13,6 @@ services:
       - tpi-ayso-red
     depends_on:
       - servidor
-  networks:
-    tpi-ayso-red:
-      driver: bridge
+networks:
+  tpi-ayso-red:
+    driver: bridge
