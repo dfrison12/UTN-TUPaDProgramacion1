@@ -1,6 +1,7 @@
 services:
   servidor:
     build: ./servidor
+    image: servidor-ayso
     container_name: servidor-ayso
     networks:
       - tpi-ayso-red
@@ -10,6 +11,7 @@ services:
       - ./servidor:/usr/src/app
   cliente:
     build: ./cliente
+    image: cliente-ayso
     container_name: cliente-ayso
     networks:
       - tpi-ayso-red
