@@ -1,6 +1,6 @@
 import requests
 
-URL = "http://servidor:5000"
+URL = "http://servidor-ayso:5000"
 
 response = requests.get(URL)
 

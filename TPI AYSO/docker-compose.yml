@@ -1,7 +1,7 @@
 services:
   servidor:
     build: ./servidor
-    container_name: servidor_ayso
+    container_name: servidor-ayso
     networks:
       - tpi-ayso-red
     ports:
@@ -10,7 +10,7 @@ services:
       - ./servidor:/usr/src/app
   cliente:
     build: ./cliente
-    container_name: cliente_ayso
+    container_name: cliente-ayso
     networks:
       - tpi-ayso-red
     volumes:
