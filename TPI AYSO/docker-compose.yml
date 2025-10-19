@@ -22,3 +22,4 @@ services:
 networks:
   tpi-ayso-red:
     driver: bridge
+    name: tpi-ayso-red
