@@ -78,6 +78,43 @@ def agregar_producto():
     print(f'Producto "{nombre}" agregado con éxito.')
 
 
+def guardar_productos(productos):
+    with open(NOMBRE_ARCHIVO, 'w', newline='', encoding='utf-8') as archivo:
+        escritor = csv.DictWriter(archivo, fieldnames=['nombre', 'precio'])
+        escritor.writeheader()
+        escritor.writerows(productos)
+
+
+def editar_producto():
+    productos = obtener_productos()
+
+    nombre = input('Ingrese el nombre del producto a editar: ').strip()
+
+    if not nombre:
+        print('El nombre del producto no puede estar vacío.')
+        return 
+
+    for producto in productos:
+        if producto['nombre'].lower() == nombre.lower():
+            precio = input('Ingrese el nuevo precio: ').strip()
+
+            if not validar_numero_positivo(precio):
+                print('Precio inválido.')
+                return
+            
+            # Modificar el precio del producto
+            producto['precio'] = float(precio)
+
+            # Escribir los cambios en el archivo CSV
+            guardar_productos(productos)
+            print(f'Producto "{nombre}" actualizado con éxito.')
+        break
+    else:
+        print(f'El producto "{nombre}" no existe.')
+
+
+
+
 def mostrar_menu():
     while True:
         print('\n--- Menú de Gestión de Productos ---')
@@ -97,7 +134,7 @@ def mostrar_menu():
             case '2':
                 agregar_producto()
             case '3':
-                print('Editar precio de producto')
+                editar_producto()
             case '4':
                 print('Eliminar producto')
             case '5':
