@@ -112,7 +112,30 @@ def editar_producto():
     else:
         print(f'El producto "{nombre}" no existe.')
 
+def eliminar_producto():
+    # Solicitar y validar el nombre del producto a eliminar
+    nombre = input('Ingrese el nombre del producto a eliminar: ').strip()
 
+    if not nombre:
+        print('El nombre del producto no puede estar vacío.')
+        return
+    
+    #  Obtener la lista de productos y filtrar el que se va a eliminar
+    productos = obtener_productos()
+    products_filtrados = []
+
+    for producto in productos:
+        if producto['nombre'].lower() != nombre.lower():
+            products_filtrados.append(producto)
+
+    # Verificar si se encontró algún producto
+    if len(products_filtrados) == len(productos):
+        print(f'El producto "{nombre}" no existe.')
+        return
+
+    # Guardar los productos filtrados en el archivo CSV
+    guardar_productos(products_filtrados)
+    print(f'Producto "{nombre}" eliminado con éxito.')
 
 
 def mostrar_menu():
@@ -136,7 +159,7 @@ def mostrar_menu():
             case '3':
                 editar_producto()
             case '4':
-                print('Eliminar producto')
+                eliminar_producto()
             case '5':
                 print('Gracias por usar el sistema. :)')
                 break
