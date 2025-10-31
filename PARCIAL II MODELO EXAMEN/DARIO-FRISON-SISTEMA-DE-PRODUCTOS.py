@@ -1,3 +1,37 @@
+import csv
+import os
+
+NOMBRE_ARCHIVO = 'productos.csv'
+
+
+def obtener_productos():
+
+    if not os.path.exists(NOMBRE_ARCHIVO):
+        with open (NOMBRE_ARCHIVO, 'w', newline='', encoding='utf-8') as archivo:
+
+            escritor = csv.DictWriter(archivo, fieldnames=['nombre', 'precio'])
+            escritor.writeheader()
+            return []
+
+
+    productos = []
+
+    with open(NOMBRE_ARCHIVO, newline='', encoding='utf-8') as archivo:
+        lector = csv.DictReader(archivo)
+        for fila in lector:
+            productos.append({'nombre': fila['nombre'], 'precio': float(fila['precio'])})
+    return productos
+
+
+def mostrar_productos():
+    print('\nLista de productos:')
+    productos = obtener_productos()
+    
+    print('Nombre   Precio')
+    for producto in productos:
+        print(f"- {producto['nombre']}: ${producto['precio']}")
+
+
 def mostrar_menu():
     while True:
         print('\n--- Menú de Gestión de Productos ---')
@@ -13,7 +47,7 @@ def mostrar_menu():
 
         match opcion:
             case '1':
-                print('Mostrar productos')
+                mostrar_productos()
             case '2':
                 print('Agregar producto')
             case '3':
