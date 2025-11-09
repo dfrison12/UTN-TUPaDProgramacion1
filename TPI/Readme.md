@@ -2,17 +2,18 @@
 
 ## Descripción del Programa
 
-Sistema completo de gestión de información sobre países desarrollado en Python puro (sin uso de librerías externas como `csv` o `pandas`). Este programa permite administrar, consultar y analizar datos geográficos y demográficos de países de todo el mundo.
+Sistema completo de gestión de información sobre países desarrollado en Python utilizando las librerías estándar `csv` y `os` (sin `pandas` ni otras librerías externas). Este programa permite administrar, consultar y analizar datos geográficos y demográficos de países de todo el mundo.
 
 ### Características Principales
 
 - **Carga Automática**: Los datos se cargan automáticamente desde `paises.csv` al iniciar el programa
 - **Gestión de Datos**: Agregar y actualizar países
+- **Persistencia Automática**: Los cambios se guardan automáticamente en el archivo CSV
 - **Búsquedas Avanzadas**: Búsqueda por nombre con coincidencia parcial o exacta
 - **Filtros Múltiples**: Por continente, rango de población y rango de superficie
 - **Ordenamiento Flexible**: Por nombre, población o superficie (ascendente/descendente)
 - **Estadísticas Detalladas**: Promedios, extremos y distribución por continentes
-- **Validaciones Robustas**: Control de errores y validación de entradas
+- **Validaciones Robustas**: Validación preventiva de entradas sin uso de try/except
 - **Interfaz Profesional**: Menú interactivo con visualización en formato tabla
 
 ### Estructura de Datos
@@ -30,7 +31,7 @@ Cada país contiene la siguiente información:
 ### Requisitos
 
 - Python 3.10 o superior (utiliza `match-case`)
-- No requiere instalación de librerías adicionales
+- No requiere instalación de librerías adicionales (solo usa librerías estándar de Python)
 
 ### Ejecución del Programa
 
@@ -249,7 +250,7 @@ El programa valida:
 - Valores numéricos válidos
 - Números positivos
 - Formato correcto de datos
-- Manejo de errores con reporte detallado
+- Validación preventiva usando os.path para verificar archivos antes de operaciones
 
 ---
 
@@ -284,13 +285,14 @@ El programa valida:
 - **Listas**: Para almacenar colecciones de países
 - **Diccionarios**: Para representar cada país con sus atributos
 - **Sets**: Para obtener continentes únicos
+- **Módulos estándar**: `csv` para lectura/escritura de archivos, `os` para validación de archivos
 
 ### Técnicas de Programación
 - **Funciones modulares**: Una función = una responsabilidad
 - **Validación robusta**: Control exhaustivo de entradas
 - **Algoritmo de ordenamiento**: Método Burbuja - Bubble Sort (O(n²))
 - **Búsqueda eficiente**: Comparación normalizada de cadenas
-- **Manejo de archivos**: Lectura manual sin librerías CSV
+- **Manejo de archivos**: Uso de csv.DictReader/DictWriter con bloque with
 
 ### Conceptos Aplicados
 - Estructuras condicionales (`if`, `elif`, `else`, `match-case`)
@@ -300,6 +302,9 @@ El programa valida:
 - Operaciones con listas y diccionarios
 - Lectura y procesamiento de archivos
 - Formateo avanzado de salida
+- Uso del módulo csv (csv.DictReader, csv.DictWriter)
+- Validación preventiva con módulo os
+- Persistencia automática de datos
 
 ---
 
@@ -356,8 +361,8 @@ El archivo `paises.csv` incluido contiene datos de ejemplo de países de diferen
 
 ## Notas Adicionales
 
-- **Sin dependencias externas**: No utiliza `import csv` ni `pandas`
-- **Python puro**: Implementación desde cero de todas las funcionalidades
+- **Sin dependencias externas**: Utiliza solo librerías estándar de Python (`csv` y `os`), no requiere `pandas` ni instalaciones adicionales
+- **Python con librerías estándar**: Implementación usando módulos csv y os de la biblioteca estándar
 - **Código limpio**: Comentado y siguiendo buenas prácticas
 - **Interfaz amigable**: Mensajes claros y diseño visual atractivo
 - **Escalable**: Fácil de extender con nuevas funcionalidades

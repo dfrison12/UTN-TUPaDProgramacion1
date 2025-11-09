@@ -6,6 +6,9 @@
 # Autores: Aguero Maximiliano y Dario Frison
 # Materia: Programación 1 - UTN
 #
+
+import csv
+import os
 # ========================================================================
 # OBJETIVO
 # ========================================================================
@@ -55,7 +58,9 @@ paises = []
 def leer_csv(nombre_archivo):
     """
     Lee un archivo CSV y carga los datos de países en la lista global.
-    
+    Utiliza el módulo csv de Python para un manejo robusto del formato CSV.
+    SIN try/except - Usa validación preventiva según restricciones académicas.
+
     Formato esperado del CSV:
         nombre,poblacion,superficie,continente
         Argentina,45000000,2780400,América del Sur
@@ -63,113 +68,109 @@ def leer_csv(nombre_archivo):
     global paises
     paises_cargados = 0
     errores_encontrados = []
-    
-    # Abrir y leer el archivo
-    archivo = open(nombre_archivo, 'r' , encoding='utf-8')
-    lineas = archivo.readlines()
-    archivo.close()
-    
-    if len(lineas) == 0:
+
+    # Verificar si el archivo existe
+    if not os.path.exists(nombre_archivo):
+        print(f"Error: El archivo '{nombre_archivo}' no existe.")
+        return False
+
+    # Verificar que sea un archivo válido (no un directorio)
+    if not os.path.isfile(nombre_archivo):
+        print(f"Error: '{nombre_archivo}' no es un archivo valido.")
+        return False
+
+    # Verificar permisos de lectura
+    if not os.access(nombre_archivo, os.R_OK):
+        print(f"Error: No se tienen permisos para leer '{nombre_archivo}'.")
+        return False
+
+    # Verificar que el archivo no esté vacío
+    if os.path.getsize(nombre_archivo) == 0:
         print("Error: El archivo esta vacio.")
         return False
-    
-    # Procesar cada línea del CSV
-    for i in range(len(lineas)):
-        linea = lineas[i].strip()
-        
-        # Saltar líneas vacías o encabezado
-        if linea == "":
-            continue
-        
-        linea_minuscula = linea.lower()
-        if i == 0 and ('nombre' in linea_minuscula or 'pais' in linea_minuscula or 'poblacion' in linea_minuscula):
-            continue
-        
-        # Extraer y limpiar campos
-        campos = linea.split(',')
-        for j in range(len(campos)):
-            campos[j] = campos[j].strip()
-        
-        # Validar estructura: debe tener 4 campos (nombre, población, superficie, continente)
-        if len(campos) != 4:
-            error = f"Linea {i+1}: Se esperan 4 campos, se encontraron {len(campos)}"
-            errores_encontrados.append(error)
-            continue
-        
-        nombre = campos[0]
-        poblacion_str = campos[1]
-        superficie_str = campos[2]
-        continente = campos[3]
-        
-        # Validar que no haya campos vacíos
-        if nombre == "" or poblacion_str == "" or superficie_str == "" or continente == "":
-            error = f"Linea {i+1}: Campos vacios no permitidos"
-            errores_encontrados.append(error)
-            continue
-        
-        # Validar que población y superficie sean números enteros
-        es_numero_pob = True
-        for caracter in poblacion_str:
-            if caracter < '0' or caracter > '9':
-                es_numero_pob = False
-                break
-        
-        es_numero_sup = True
-        for caracter in superficie_str:
-            if caracter < '0' or caracter > '9':
-                es_numero_sup = False
-                break
-        
-        if not es_numero_pob or not es_numero_sup:
-            error = f"Linea {i+1}: Poblacion y superficie deben ser numeros enteros"
-            errores_encontrados.append(error)
-            continue
-        
-        poblacion = int(poblacion_str)
-        superficie = int(superficie_str)
-        
-        # Regla de negocio: no existen países con población o superficie cero o negativa
-        if poblacion <= 0 or superficie <= 0:
-            error = f"Linea {i+1}: Poblacion y superficie deben ser numeros positivos"
-            errores_encontrados.append(error)
-            continue
-        
-        # Crear diccionario del país y agregarlo a la lista
-        pais = {
-            'nombre': nombre.title(),
-            'poblacion': poblacion,
-            'superficie': superficie,
-            'continente': continente.title()
-        }
-        
-        paises.append(pais)
-        paises_cargados = paises_cargados + 1
-    
+
+    # Abrir y leer el archivo usando csv.DictReader con bloque with
+    with open(nombre_archivo, 'r', newline='', encoding='utf-8') as archivo:
+        lector = csv.DictReader(archivo)
+
+        # Verificar que el archivo tenga los campos esperados
+        if lector.fieldnames is None:
+            print("Error: El archivo esta vacio.")
+            return False
+
+        # Procesar cada fila del CSV
+        for i, fila in enumerate(lector, start=2):  # start=2 porque línea 1 es el header
+            # Validar que la fila no sea None
+            if fila is None:
+                error = f"Linea {i}: Fila vacia o corrupta"
+                errores_encontrados.append(error)
+                continue
+
+            # Validar que todos los campos obligatorios estén presentes
+            nombre = fila.get('nombre', '').strip()
+            poblacion_str = fila.get('poblacion', '').strip()
+            superficie_str = fila.get('superficie', '').strip()
+            continente = fila.get('continente', '').strip()
+
+            # Validar que no haya campos vacíos
+            if not nombre or not poblacion_str or not superficie_str or not continente:
+                error = f"Linea {i}: Campos vacios no permitidos"
+                errores_encontrados.append(error)
+                continue
+
+            # Validar y convertir población y superficie a enteros
+            # USAR es_numero() para validar ANTES de convertir (sin try/except)
+            if not es_numero(poblacion_str) or not es_numero(superficie_str):
+                error = f"Linea {i}: Poblacion y superficie deben ser numeros enteros"
+                errores_encontrados.append(error)
+                continue
+
+            # Ahora es seguro convertir (no lanzará ValueError porque ya validamos)
+            poblacion = int(poblacion_str)
+            superficie = int(superficie_str)
+
+            # Regla de negocio: no existen países con población o superficie cero o negativa
+            if poblacion <= 0 or superficie <= 0:
+                error = f"Linea {i}: Poblacion y superficie deben ser numeros positivos"
+                errores_encontrados.append(error)
+                continue
+
+            # Crear diccionario del país y agregarlo a la lista
+            pais = {
+                'nombre': nombre.title(),
+                'poblacion': poblacion,
+                'superficie': superficie,
+                'continente': continente.title()
+            }
+
+            paises.append(pais)
+            paises_cargados = paises_cargados + 1
+
     # Mostrar resumen del resultado
     print("\n" + "="*60)
     print("           RESULTADO DE CARGA DE ARCHIVO")
     print("="*60)
-    
+
     if paises_cargados > 0:
         print(f"Paises cargados exitosamente: {paises_cargados}")
-    
+
     if len(errores_encontrados) > 0:
         print(f"Errores encontrados: {len(errores_encontrados)}")
         print("\nDetalle de errores:")
-        
+
         limite = 5 if len(errores_encontrados) >= 5 else len(errores_encontrados)
-        
+
         for j in range(limite):
             print(f"  {errores_encontrados[j]}")
-        
+
         if len(errores_encontrados) > 5:
             print(f"  ... y {len(errores_encontrados) - 5} errores mas")
-    
+
     if paises_cargados == 0:
         print("No se pudo cargar ningun pais del archivo.")
-    
+
     print("="*60)
-    
+
     return paises_cargados > 0
 
 # ========================== FUNCIONES AUXILIARES ==========================
@@ -205,20 +206,20 @@ def obtener_continentes_unicos():
     Útil para mostrar opciones al usuario y hacer estadísticas por continente.
     """
     continentes = []
-    
+
     # Extraer continentes únicos
     for pais in paises:
         continente = pais['continente']
-        
+
         esta = False
         for c in continentes:
             if c == continente:
                 esta = True
                 break
-        
+
         if not esta:
             continentes.append(continente)
-    
+
     # Ordenar alfabéticamente
     for i in range(len(continentes)):
         for j in range(i + 1, len(continentes)):
@@ -226,8 +227,22 @@ def obtener_continentes_unicos():
                 temp = continentes[i]
                 continentes[i] = continentes[j]
                 continentes[j] = temp
-    
+
     return continentes
+
+def guardar_paises(nombre_archivo='paises.csv'):
+    """
+    Guarda la lista de países en el archivo CSV.
+    Utiliza el módulo csv de Python para escritura robusta.
+
+    Args:
+        nombre_archivo (str): Nombre del archivo CSV donde guardar los países.
+                             Por defecto usa 'paises.csv'.
+    """
+    with open(nombre_archivo, 'w', newline='', encoding='utf-8') as archivo:
+        escritor = csv.DictWriter(archivo, fieldnames=['nombre', 'poblacion', 'superficie', 'continente'])
+        escritor.writeheader()
+        escritor.writerows(paises)
 
 # ========================== FUNCIONES DE GESTIÓN DE PAÍSES ==========================
 
@@ -315,9 +330,12 @@ def agregar_pais():
         'superficie': superficie,
         'continente': continente
     }
-    
+
     paises.append(nuevo_pais)
-    
+
+    # Guardar cambios en el archivo CSV
+    guardar_paises()
+
     print("\n" + "="*50)
     print(f"Pais '{nombre}' agregado exitosamente!")
     print("="*50)
@@ -373,7 +391,7 @@ def actualizar_pais():
     # Actualizar superficie si se ingresa un valor
     print("\nActualizacion de superficie:")
     nueva_superficie_str = input("Nueva superficie en km2 (Enter para mantener actual): ").strip()
-    
+
     if nueva_superficie_str != "":
         if es_numero(nueva_superficie_str):
             nueva_superficie = int(nueva_superficie_str)
@@ -384,7 +402,10 @@ def actualizar_pais():
                 print("Error: La superficie debe ser mayor a 0. No se actualizo.")
         else:
             print("Error: Debe ingresar un numero. No se actualizo.")
-    
+
+    # Guardar cambios en el archivo CSV
+    guardar_paises()
+
     print("\n" + "="*50)
     print("Pais actualizado exitosamente.")
     print("="*50)
@@ -914,17 +935,24 @@ def mostrar_estadisticas():
 def mostrar_paises(lista_paises):
     """
     Muestra una lista de países en formato tabla profesional.
-    
+
     Parámetros:
         lista_paises (list): Lista de diccionarios de países
     """
     if not lista_paises:
-        print("📋 No hay países para mostrar.")
+        print("No hay países para mostrar.")
         return
-    
-    # Calcular anchos de columna dinámicamente
-    max_nombre = max(len(pais['nombre']) for pais in lista_paises)
-    max_continente = max(len(pais['continente']) for pais in lista_paises)
+
+    # Calcular anchos de columna dinámicamente (SIN generator expressions)
+    max_nombre = 0
+    for pais in lista_paises:
+        if len(pais['nombre']) > max_nombre:
+            max_nombre = len(pais['nombre'])
+
+    max_continente = 0
+    for pais in lista_paises:
+        if len(pais['continente']) > max_continente:
+            max_continente = len(pais['continente'])
     
     # Asegurar anchos mínimos
     ancho_nombre = max(max_nombre, 15)
